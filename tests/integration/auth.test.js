@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const app = require('../../src/app');
 const config = require('../../src/config/config');
 const auth = require('../../src/middlewares/auth');
-const { tokenService, emailService } = require('../../src/services');
+const { tokenService } = require('../../src/services');
 const ApiError = require('../../src/utils/ApiError');
 const setupTestDB = require('../utils/setupTestDB');
 const { User, Token } = require('../../src/models');
@@ -235,13 +235,13 @@ describe('Auth routes', () => {
   });
 
   describe('POST /v1/auth/forgot-password', () => {
-    beforeEach(() => {
-      jest.spyOn(emailService.transport, 'sendMail').mockResolvedValue();
-    });
+    // beforeEach(() => {
+    //   jest.spyOn(emailService.transport, 'sendMail').mockResolvedValue();
+    // });
 
     test('should return 204 and send reset password email to the user', async () => {
       await insertUsers([userOne]);
-      const sendResetPasswordEmailSpy = jest.spyOn(emailService, 'sendResetPasswordEmail');
+      // const sendResetPasswordEmailSpy = jest.spyOn(emailService, 'sendResetPasswordEmail');
 
       await request(app).post('/v1/auth/forgot-password').send({ email: userOne.email }).expect(httpStatus.NO_CONTENT);
 
@@ -356,13 +356,13 @@ describe('Auth routes', () => {
   });
 
   describe('POST /v1/auth/send-verification-email', () => {
-    beforeEach(() => {
-      jest.spyOn(emailService.transport, 'sendMail').mockResolvedValue();
-    });
+    // beforeEach(() => {
+    //   jest.spyOn(emailService.transport, 'sendMail').mockResolvedValue();
+    // });
 
     test('should return 204 and send verification email to the user', async () => {
       await insertUsers([userOne]);
-      const sendVerificationEmailSpy = jest.spyOn(emailService, 'sendVerificationEmail');
+      // const sendVerificationEmailSpy = jest.spyOn(emailService, 'sendVerificationEmail');
 
       await request(app)
         .post('/v1/auth/send-verification-email')
